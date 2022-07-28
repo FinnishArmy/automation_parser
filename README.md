@@ -8,4 +8,13 @@ Only for use on XML files.
 The current release will automatically detect the benchmark file, however is
 only designed to work with PCMark10 files. 
 
+BASIC PREP                       
+pip install pandas (1.4.2)       
+python 2.7.18                    
+Linux: sudo pacman -S tk         
+MacOS: brew install python-tk  
+
+When the program is ran, user is prompted to pick a file, only XML files will be 
+available to pick. If the XML file is not a PCMark10 file, the program will provide the user with an error.
+
 To exit the program, click on 'cancel' when prompted to pick a file.
