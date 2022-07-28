@@ -5,7 +5,7 @@ Made for Intel to parse XML automation files for easy usage.
 # Usage #
 Only for use on XML files. 
 
-Later releases will automatically detect for which benchmark the XML file is for.
-Current release (0.1) will only work on XML files made by PCMark10.
+The current release will automatically detect the benchmark file, however is
+only designed to work with PCMark10 files. 
 
 To exit the program, click on 'cancel' when prompted to pick a file.
