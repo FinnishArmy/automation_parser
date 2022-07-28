@@ -46,19 +46,18 @@ def main():
     # window.geometry("+{}+{}".format(posRight, posDown))
 
     # Ask user for the csv file
-    window.filename = filedialog.askopenfilename(initialdir= "/", title = "Select Participant Log File", filetypes = (("XML Files", "*.xml"),("All Files","*.*")))
-    print(window.filename)
+    window.filename = filedialog.askopenfilename(initialdir= "/", title = "Select Participant Log File")
 
     canvas = Canvas(window, width= 1000, height= 750, bg="White")
-
-    # Set the tree to parse the file selected by the user
-    tree = et.parse(window.filename)
-
-    root = tree.getroot()
 
 
     # Automatically detect which benchmark was selected.
     if "PCMark10" in window.filename:
+
+         # Set the tree to parse the file selected by the user
+        tree = et.parse(window.filename)
+
+        root = tree.getroot()
 
         # Empty arrays for entering data.
         PC10Score = []
@@ -149,16 +148,35 @@ def main():
             canvas.pack()
             VideoEditing.append(videoedit.text)
 
+        # Restart the program when user exists so you can pick a new file.
+        subprocess.call([sys.executable, os.path.realpath(__file__)] + sys.argv[1:])
 
+    elif "Crossmark" in window.filename:
+
+        with open(window.filename, 'r', errors = 'replace') as f:
+            content = f.readlines()
+
+        print("Parsing Crossmark file...")
+        canvas.create_text(150, 290, text="Overall Score:  " + content[17], fill="black", font=('Helvetica 15 bold'))
+        canvas.pack()
+
+        canvas.create_text(150, 310, text="Productvity:  " + content[19], fill="black", font=('Helvetica 15 bold'))
+        canvas.pack()
+
+        canvas.create_text(150, 330, text="Creativity:  " + content[21], fill="black", font=('Helvetica 15 bold'))
+        canvas.pack()
+
+        canvas.create_text(150, 350, text="Responsiveness:  " + content[23], fill="black", font=('Helvetica 15 bold'))
+        canvas.pack()
 
         window.mainloop()
         print("Parse complete.")
 
+        # Restart the program when user exists so you can pick a new file.
+        subprocess.call([sys.executable, os.path.realpath(__file__)] + sys.argv[1:])
+
     else:
         print("Not a valid file type.")
-
-    # Restart the program when user exists so you can pick a new file.
-    subprocess.call([sys.executable, os.path.realpath(__file__)] + sys.argv[1:])
 
 
 if __name__ == "__main__":
