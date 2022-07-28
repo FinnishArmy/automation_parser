@@ -148,6 +148,10 @@ def main():
             canvas.pack()
             VideoEditing.append(videoedit.text)
 
+            
+        window.mainloop()
+        print("Parse complete.")
+
         # Restart the program when user exists so you can pick a new file.
         subprocess.call([sys.executable, os.path.realpath(__file__)] + sys.argv[1:])
 
