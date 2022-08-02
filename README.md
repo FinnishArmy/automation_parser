@@ -15,6 +15,6 @@ Linux: sudo pacman -S tk
 MacOS: brew install python-tk  
 
 When the program is ran, user is prompted to pick a file, only XML files will be 
-available to pick. If the XML file is not a PCMark10 file, the program will provide the user with an error.
+available to pick. If the XML file is not a combatible benchmark file, the program will provide the user with an error.
 
-To exit the program, click on 'cancel' when prompted to pick a file.
+To exit the program, click on 'Exit Program' or 'Cancel' when prompted to pick a file.
