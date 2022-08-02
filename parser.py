@@ -26,37 +26,18 @@ from turtle import clear
 import pandas
 from tkinter import *
 
-def main():
-    # Declare a window
-    window = Tk()
+def PC_mark10(file):
+            window = Tk()
 
-    # Set the window title name
-    window.title("DTT Parser")
-    # Set a width and height
-    window.configure(width = 500, height = 300)
+            # Set the window title name
+            window.title("DTT Parser")
+            # Set a width and height
+            window.configure(width = 500, height = 300)
 
-    # Set a window colour
-    window.configure(bg = 'gray18')
+            # Set a window colour
+            window.configure(bg = 'gray18')
 
-    # Move the window into the center of the screen
-    # winWidth = window.winfo_reqwidth()
-    # winHeight = window.winfo_reqheight()
-    # posRight = int(window.winfo_screenwidth() / 2 - winWidth / 2)
-    # posDown = int(window.winfo_screenheight() / 2 - winHeight / 2)
-    # window.geometry("+{}+{}".format(posRight, posDown))
-
-    # Ask user for the csv file
-    window.filename = filedialog.askopenfilenames(initialdir= "/", title = "Select Participant Log File")
-
-    canvas = Canvas(window, width= 1000, height= 750, bg="White")
-
-
-    # Automatically detect which benchmark was selected.
-    file: str
-    for file in window.filename:
-
-        if "PCMark10" in file:
-    
+            canvas = Canvas(window, width= 1000, height= 750, bg="White")
             # Set the tree to parse the file selected by the user
             tree = et.parse(file)
     
@@ -78,6 +59,12 @@ def main():
     
             print("Beginning parse")
     
+            #btn = Button(win, text = 'Next Benchmark', bd = '5', command = canvas.update_idletasks)
+            #btn.pack(side = 'bottom')
+
+            close_benchmark = Button(window, text = "Close Benchmark", command = window.quit)
+            close_benchmark.pack(pady=20)
+            
             ### For loops to grab the root name of each score catagory ##
             for score in root.iter('PCMark10Score'):
                 print(score.text)
@@ -150,41 +137,91 @@ def main():
                 canvas.create_text(150, 290, text="Video Editing:  " + videoedit.text, fill="black", font=('Helvetica 15 bold'))
                 canvas.pack()
                 VideoEditing.append(videoedit.text)
-    
-    
-            window.mainloop()
+            
             print("Parse complete.")
-    
-            # Restart the program when user exists so you can pick a new file.
-            subprocess.call([sys.executable, os.path.realpath(__file__)] + sys.argv[1:])
-    
-        if "Crossmark" in file:
-    
+
+def crossmark(file):
+            window = Tk()
+
+            # Set the window title name
+            window.title("DTT Parser")
+            # Set a width and height
+            window.configure(width = 500, height = 300)
+
+            # Set a window colour
+            window.configure(bg = 'gray18')
+
+            canvas = Canvas(window, width= 1000, height= 750, bg="White")
+
+            close_benchmark = Button(window, text = "Close Benchmark", command = window.quit)
+            close_benchmark.pack(pady=20)
+
             with open(file, 'r', errors = 'replace') as f:
                 content = f.readlines()
     
             print("Parsing Crossmark file...")
             canvas.create_text(150, 290, text="Overall Score:  " + content[17], fill="black", font=('Helvetica 15 bold'))
+            print("Overall score: " + content[17])
             canvas.pack()
     
-            canvas.create_text(150, 310, text="Productvity:  " + content[19], fill="black", font=('Helvetica 15 bold'))
+            canvas.create_text(150, 310, text="Productivity:  " + content[19], fill="black", font=('Helvetica 15 bold'))
+            print("Productivity: " + content[19])
             canvas.pack()
     
             canvas.create_text(150, 330, text="Creativity:  " + content[21], fill="black", font=('Helvetica 15 bold'))
+            print("Creativity: " + content[21])
             canvas.pack()
     
             canvas.create_text(150, 350, text="Responsiveness:  " + content[23], fill="black", font=('Helvetica 15 bold'))
+            print("Responsiveness: " + content[23])
             canvas.pack()
-    
-            window.mainloop()
+
             print("Parse complete.")
+
+
+def main():
+    # Declare a window
+    window = Tk()
+
+    # Set the window title name
+    window.title("DTT Parser")
+    # Set a width and height
+    window.configure(width = 500, height = 300)
+
+    # Set a window colour
+    window.configure(bg = 'gray18')
+
+    # Move the window into the center of the screen
+    # winWidth = window.winfo_reqwidth()
+    # winHeight = window.winfo_reqheight()
+    # posRight = int(window.winfo_screenwidth() / 2 - winWidth / 2)
+    # posDown = int(window.winfo_screenheight() / 2 - winHeight / 2)
+    # window.geometry("+{}+{}".format(posRight, posDown))
+
+    # Ask user for the csv file
+    window.filename = filedialog.askopenfilenames(initialdir= "/", title = "Select Participant Log File")
+
+    canvas = Canvas(window, width= 1000, height= 750, bg="White")
+
+    # Automatically detect which benchmark was selected.
+    file: str
+    for file in window.filename:
+        # If it's a PCMark10 benchmark, call the proper function
+        if "PCMark10" in file:
+            PC_mark10(file)
+    
+
+        # If it's a Crossmark benchmark, call the proper function.
+        if "Crossmark" in file:
+            crossmark(file)
     
             # Restart the program when user exists so you can pick a new file.
-            subprocess.call([sys.executable, os.path.realpath(__file__)] + sys.argv[1:])
+            # subprocess.call([sys.executable, os.path.realpath(__file__)] + sys.argv[1:])
     
         else:
             print("Not a valid file type.")
-
+            
+        window.mainloop()
 
 if __name__ == "__main__":
     main()
