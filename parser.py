@@ -305,11 +305,11 @@ def main():
     exit_program.pack(pady=20)
 
     # Move the window into the center of the screen
-    # winWidth = window.winfo_reqwidth()
-    # winHeight = window.winfo_reqheight()
-    # posRight = int(window.winfo_screenwidth() / 2 - winWidth / 2)
-    # posDown = int(window.winfo_screenheight() / 2 - winHeight / 2)
-    # window.geometry("+{}+{}".format(posRight, posDown))
+    winWidth = window.winfo_reqwidth()
+    winHeight = window.winfo_reqheight()
+    posRight = int(window.winfo_screenwidth() / 2 - winWidth / 2)
+    posDown = int(window.winfo_screenheight() / 2 - winHeight / 2)
+    window.geometry("+{}+{}".format(posRight, posDown))
 
     # Ask user for the csv file
     window.filename = filedialog.askopenfilenames(initialdir= "/", title = "Select Participant Log File")
