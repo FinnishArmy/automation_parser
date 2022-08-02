@@ -62,9 +62,14 @@ def PC_mark10(file):
             #btn = Button(win, text = 'Next Benchmark', bd = '5', command = canvas.update_idletasks)
             #btn.pack(side = 'bottom')
 
-            close_benchmark = Button(window, text = "Close Benchmark", command = window.quit)
+            # Open the next file info, if no more, end the program.
+            close_benchmark = Button(window, text = "Next Benchmark", command = window.quit)
             close_benchmark.pack(pady=20)
             
+            # End the program entirely
+            exit_program = Button(window, text = "Exit application", command = window.destroy)
+            exit_program.pack(pady=20)
+
             ### For loops to grab the root name of each score catagory ##
             for score in root.iter('PCMark10Score'):
                 print(score.text)
@@ -153,8 +158,11 @@ def crossmark(file):
 
             canvas = Canvas(window, width= 1000, height= 750, bg="White")
 
-            close_benchmark = Button(window, text = "Close Benchmark", command = window.quit)
+            close_benchmark = Button(window, text = "Next Benchmark", command = window.quit)
             close_benchmark.pack(pady=20)
+
+            exit_program = Button(window, text = "Exit application", command = window.destroy)
+            exit_program.pack(pady=20)
 
             with open(file, 'r', errors = 'replace') as f:
                 content = f.readlines()
@@ -201,7 +209,6 @@ def main():
     # Ask user for the csv file
     window.filename = filedialog.askopenfilenames(initialdir= "/", title = "Select Participant Log File")
 
-    canvas = Canvas(window, width= 1000, height= 750, bg="White")
 
     # Automatically detect which benchmark was selected.
     file: str
