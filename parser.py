@@ -5,6 +5,7 @@
 #####################################
 # BASIC PREP                        #
 # pip install openpyxl (3.0.10)     #
+# pip install xlsxwriter (3.0.3)    #
 # pip install pandas (1.4.2)        #
 # python 2.7.18                     #
 # Linux: sudo pacman -S tk          #
@@ -20,12 +21,30 @@ import sys
 import os
 import subprocess
 import xml.etree.cElementTree as et
+from os.path import exists
+import xlsxwriter
+import csv
 
 # UI
 from tkinter import filedialog
 from turtle import clear
 import pandas
 from tkinter import *
+
+def excel_creator():
+    #check if excel sheet is there, if so, clean, if not make it
+    file_exists = os.path.exists('benchmarks.xlsx')
+    print(file_exists)
+
+    if file_exists != True:
+        workbook = xlsxwriter.Workbook('benchmarks.xlsx')
+        worksheet = workbook.add_worksheet()
+
+        workbook.close()
+
+    else:
+        print("Excel sheet already exists!")
+        pass
 
 def PC_mark10(file):
             window = Tk()
@@ -226,6 +245,49 @@ def crossmark(file):
 
             print("Parse complete.")
 
+def mcp_power(file):
+            print("Test")
+            window = Tk()
+
+            # Set the window title name
+            window.title("DTT Parser")
+            # Set a width and height
+            window.configure(width = 500, height = 300)
+
+            # Set a window colour
+            window.configure(bg = 'gray18')
+
+            canvas = Canvas(window, width= 1000, height= 750, bg="White")
+
+            close_benchmark = Button(window, text = "Next Benchmark", command = window.quit)
+            close_benchmark.pack(pady=20)
+
+            exit_program = Button(window, text = "Exit application", command = window.destroy)
+            exit_program.pack(pady=20)
+
+            print(file)
+
+            power = []
+
+            # Convert the file to a string, split the csv data at the commas
+            # convert the list into a string and grab line 332
+            # remove the brackets, commans and print out the value
+            file: str
+            with open(file) as fd:
+                for line in fd.readlines():
+                    power.append(line.split(','))
+
+            mcp = []
+            mcp.append(power[332])
+            
+            s = ''.join(str(x) for x in mcp)
+
+            canvas.create_text(150, 350, text="MCP Power AVG:  " + 
+            s.strip('[]').strip("'").split(',')[3].strip(), fill="black", font=('Helvetica 15 bold'))
+            canvas.pack()
+
+            print(s.strip('[]').strip("'").split(',')[3].strip())
+
 
 def main():
     # Declare a window
@@ -239,6 +301,9 @@ def main():
     # Set a window colour
     window.configure(bg = 'gray18')
 
+    exit_program = Button(window, text = "Exit application", command = window.destroy)
+    exit_program.pack(pady=20)
+
     # Move the window into the center of the screen
     # winWidth = window.winfo_reqwidth()
     # winHeight = window.winfo_reqheight()
@@ -249,9 +314,9 @@ def main():
     # Ask user for the csv file
     window.filename = filedialog.askopenfilenames(initialdir= "/", title = "Select Participant Log File")
 
-    #check if excel sheet is there, if so, clean, if not make it
+    excel_creator()
 
-    
+
     # Automatically detect which benchmark was selected.
     file: str
     for file in window.filename:
@@ -261,11 +326,11 @@ def main():
     
 
         # If it's a Crossmark benchmark, call the proper function.
-        if "Crossmark" in file:
+        if "default" in file:
             crossmark(file)
-    
-            # Restart the program when user exists so you can pick a new file.
-            # subprocess.call([sys.executable, os.path.realpath(__file__)] + sys.argv[1:])
+
+        if "summary" in file:
+            mcp_power(file)
     
         else:
             print("Not a valid file type.")
