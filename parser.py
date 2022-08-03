@@ -72,88 +72,75 @@ def PC_mark10(file, sheet):
             #btn.pack(side = 'bottom')
 
             # Open the next file info, if no more, end the program.
-            close_benchmark = Button(window, text = "Next Benchmark", command = window.quit)
-            close_benchmark.pack(pady=20)
+            close_benchmark = Button(window, text = "Next Benchmark", command = window.quit).pack(pady=5)
             
             # End the program entirely
-            exit_program = Button(window, text = "Exit application", command = window.destroy)
-            exit_program.pack(pady=20)
+            exit_program = Button(window, text = "Exit application", command = window.destroy).pack(pady=5)
 
             ### For loops to grab the root name of each score catagory ##
             for score in root.iter('PCMark10Score'):
                 print(score.text)
                 canvas.create_text(10, 10, text="PC10Score:  " + score.text, fill="black", font=('Helvetica 15 bold'), anchor='w')
-                canvas.pack()
                 PC10Score.append(score.text)
                 all_scores.append(score.text)
     
             for ess in root.iter('EssentialsScore'):
                 print(ess.text)
                 canvas.create_text(10, 30, text="Essentials:  " + ess.text, fill="black", font=('Helvetica 15 bold'), anchor='w')
-                canvas.pack()
                 Essentials.append(ess.text)
                 all_scores.append(ess.text)
     
             for product in root.iter('ProductivityScore'):
                 print(product.text)
                 canvas.create_text(10, 50, text="Productivity:  " + product.text, fill="black", font=('Helvetica 15 bold'), anchor='w')
-                canvas.pack()
                 Productivity.append(product.text)
                 all_scores.append(product.text)
     
             for dig in root.iter('DigitalContentCreationScore'):
                 print(dig.text)
                 canvas.create_text(10, 70, text="Digital Content Creation:  " + dig.text, fill="black", font=('Helvetica 15 bold'), anchor='w')
-                canvas.pack()
                 DigContentCreation.append(dig.text)
                 all_scores.append(dig.text)
     
             for app in root.iter('AppStartupScore'):
                 print(app.text)
                 canvas.create_text(10, 90, text="App Startup:  " + app.text, fill="black", font=('Helvetica 15 bold'), anchor='w')
-                canvas.pack()
                 AppStartup.append(app.text)
                 all_scores.append(app.text)
     
             for video in root.iter('VideoConferencingScore'):
                 print(video.text)
                 canvas.create_text(10, 110, text="Video Confrencing:  " + video.text, fill="black", font=('Helvetica 15 bold'), anchor='w')
-                canvas.pack()
                 VideoConfrence.append(video.text)
                 all_scores.append(video.text)
     
             for web in root.iter('WebBrowsingScore'):
                 print(web.text)
                 canvas.create_text(10, 130, text="Web Browsing:  " + web.text, fill="black", font=('Helvetica 15 bold'), anchor='w')
-                canvas.pack()
                 WebBrowsing.append(web.text)
                 all_scores.append(web.text)
     
             for spread in root.iter('SpreadsheetsScore'):
                 print(spread.text)
                 canvas.create_text(10, 150, text="Spreadsheets:  " + spread.text, fill="black", font=('Helvetica 15 bold'), anchor='w')
-                canvas.pack()
                 Spreadsheet.append(spread.text)
                 all_scores.append(spread.text)
     
             for write in root.iter('WritingScore'):
                 print(write.text)
                 canvas.create_text(10, 170, text="Writing:  " + write.text, fill="black", font=('Helvetica 15 bold'), anchor='w')
-                canvas.pack()
                 Writing.append(write.text)
                 all_scores.append(write.text)
     
             for photo in root.iter('PhotoEditingScore'):
                 print(photo.text)
                 canvas.create_text(10, 190, text="Photo Editing:  " + photo.text, fill="black", font=('Helvetica 15 bold'), anchor='w')
-                canvas.pack()
                 PhotoEditing.append(photo.text)
                 all_scores.append(photo.text)
     
             for render in root.iter('RenderingAndVisualizationScore'):
                 print(render.text)
                 canvas.create_text(10, 210, text="Rendering and Visualization:  " + render.text, fill="black", font=('Helvetica 15 bold'), anchor='w')
-                canvas.pack()
                 RenderVisual.append(render.text)
                 all_scores.append(render.text)
     
@@ -218,11 +205,9 @@ def crossmark(file, sheet):
 
             canvas = Canvas(window, width= 500, height= 250, bg="White")
 
-            close_benchmark = Button(window, text = "Next Benchmark", command = window.quit)
-            close_benchmark.pack(pady=20)
+            close_benchmark = Button(window, text = "Next Benchmark", command = window.quit).pack(pady=5)
 
-            exit_program = Button(window, text = "Exit application", command = window.destroy)
-            exit_program.pack(pady=20)
+            exit_program = Button(window, text = "Exit application", command = window.destroy).pack(pady=5)
 
             list = []
 
@@ -235,17 +220,14 @@ def crossmark(file, sheet):
             canvas.create_text(10, 30, text="Overall Score:  " + content[17], fill="black", font=('Helvetica 15 bold'), anchor='w')
             print("Overall score: " + content[17])
             list.append(content[17])
-            canvas.pack()
     
             canvas.create_text(10, 50, text="Productivity:  " + content[19], fill="black", font=('Helvetica 15 bold'), anchor='w')
             print("Productivity: " + content[19])
             list.append(content[19])
-            canvas.pack()
     
             canvas.create_text(10, 70, text="Creativity:  " + content[21], fill="black", font=('Helvetica 15 bold'), anchor='w')
             print("Creativity: " + content[21])
             list.append(content[21])
-            canvas.pack()
     
             canvas.create_text(10, 90, text="Responsiveness:  " + content[23], fill="black", font=('Helvetica 15 bold'), anchor='w')
             print("Responsiveness: " + content[23])
@@ -277,18 +259,16 @@ def mcp_power(file):
             # Set the window title name
             window.title("DTT Parser")
             # Set a width and height
-            window.configure(width = 500, height = 300)
+            window.configure(width = 350, height = 350)
 
             # Set a window colour
             window.configure(bg = 'gray18')
 
-            canvas = Canvas(window, width= 1000, height= 750, bg="White")
+            canvas = Canvas(window, width= 250, height= 250, bg="White")
 
-            close_benchmark = Button(window, text = "Next Benchmark", command = window.quit)
-            close_benchmark.pack(pady=20)
+            close_benchmark = Button(window, text = "Next Benchmark", command = window.quit).pack(pady=5)
 
-            exit_program = Button(window, text = "Exit application", command = window.destroy)
-            exit_program.pack(pady=20)
+            exit_program = Button(window, text = "Exit application", command = window.destroy).pack(pady=5)
 
             print(file)
 
@@ -307,13 +287,40 @@ def mcp_power(file):
             
             s = ''.join(str(x) for x in mcp)
 
-            canvas.create_text(150, 350, text="MCP Power AVG:  " + 
+            canvas.create_text(120, 50, text="MCP Power AVG:  " + 
             s.strip('[]').strip("'").split(',')[3].strip(), fill="black", font=('Helvetica 15 bold'))
             canvas.pack()
 
             print(s.strip('[]').strip("'").split(',')[3].strip())
 
 
+
+# Automatically detect which benchmark was selected.
+def pick_file(window, workbook):
+
+    file: str
+    for file in window.filename:
+        # If it's a PCMark10 benchmark, call the proper function
+        if "result" in file:
+            PC_mark10(file, workbook)
+    
+
+        # If it's a Crossmark benchmark, call the proper function.
+        if "default" in file:
+            crossmark(file, workbook)
+
+        # If it's a power data file, call the proper function.
+        if "summary" in file:
+            mcp_power(file)
+    
+        else:
+            print("Not a valid file type.")
+
+        window.mainloop()
+
+
+
+# Driver
 def main():
     # Declare a window
     window = Tk()
@@ -346,31 +353,13 @@ def main():
         workbook = xlsxwriter.Workbook('benchmarks.xlsx')
 
     else:
-        print("Excel sheet already exists!")
-        pass
-
+        print("Excel sheet already exists! Deleting previous sheet")
+        os.remove('benchmarks.xlsx')
+        workbook = xlsxwriter.Workbook('benchmarks.xlsx')
 
 
     # Automatically detect which benchmark was selected.
-    file: str
-    for file in window.filename:
-        # If it's a PCMark10 benchmark, call the proper function
-        if "result" in file:
-            PC_mark10(file, workbook)
-    
-
-        # If it's a Crossmark benchmark, call the proper function.
-        if "default" in file:
-            crossmark(file, workbook)
-
-        # If it's a power data file, call the proper function.
-        if "summary" in file:
-            mcp_power(file)
-    
-        else:
-            print("Not a valid file type.")
-
-        window.mainloop()
+    pick_file(window, workbook)
 
     workbook.close()
 
