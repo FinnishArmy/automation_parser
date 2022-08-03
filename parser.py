@@ -353,7 +353,7 @@ def main():
     file: str
     for file in window.filename:
         # If it's a PCMark10 benchmark, call the proper function
-        if "PCMark10" in file:
+        if "result" in file:
             PC_mark10(file, workbook)
     
 
@@ -361,6 +361,7 @@ def main():
         if "default" in file:
             crossmark(file, workbook)
 
+        # If it's a power data file, call the proper function.
         if "summary" in file:
             mcp_power(file)
     
