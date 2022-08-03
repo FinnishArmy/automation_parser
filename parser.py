@@ -39,12 +39,12 @@ def PC_mark10(file, sheet):
             # Set the window title name
             window.title("DTT Parser")
             # Set a width and height
-            window.configure(width = 500, height = 300)
+            window.configure(width = 200, height = 200)
 
             # Set a window colour
             window.configure(bg = 'gray18')
 
-            canvas = Canvas(window, width= 1000, height= 750, bg="White")
+            canvas = Canvas(window, width= 500, height= 250, bg="White")
             # Set the tree to parse the file selected by the user
             tree = et.parse(file)
     
@@ -82,84 +82,84 @@ def PC_mark10(file, sheet):
             ### For loops to grab the root name of each score catagory ##
             for score in root.iter('PCMark10Score'):
                 print(score.text)
-                canvas.create_text(150, 50, text="PC10Score:  " + score.text, fill="black", font=('Helvetica 15 bold'))
+                canvas.create_text(10, 10, text="PC10Score:  " + score.text, fill="black", font=('Helvetica 15 bold'), anchor='w')
                 canvas.pack()
                 PC10Score.append(score.text)
                 all_scores.append(score.text)
     
             for ess in root.iter('EssentialsScore'):
                 print(ess.text)
-                canvas.create_text(150, 80, text="Essentials:  " + ess.text, fill="black", font=('Helvetica 15 bold'))
+                canvas.create_text(10, 30, text="Essentials:  " + ess.text, fill="black", font=('Helvetica 15 bold'), anchor='w')
                 canvas.pack()
                 Essentials.append(ess.text)
                 all_scores.append(ess.text)
     
             for product in root.iter('ProductivityScore'):
                 print(product.text)
-                canvas.create_text(150, 110, text="Productivity:  " + product.text, fill="black", font=('Helvetica 15 bold'))
+                canvas.create_text(10, 50, text="Productivity:  " + product.text, fill="black", font=('Helvetica 15 bold'), anchor='w')
                 canvas.pack()
                 Productivity.append(product.text)
                 all_scores.append(product.text)
     
             for dig in root.iter('DigitalContentCreationScore'):
                 print(dig.text)
-                canvas.create_text(150, 130, text="Digital Content Creation:  " + dig.text, fill="black", font=('Helvetica 15 bold'))
+                canvas.create_text(10, 70, text="Digital Content Creation:  " + dig.text, fill="black", font=('Helvetica 15 bold'), anchor='w')
                 canvas.pack()
                 DigContentCreation.append(dig.text)
                 all_scores.append(dig.text)
     
             for app in root.iter('AppStartupScore'):
                 print(app.text)
-                canvas.create_text(150, 150, text="App Startup:  " + app.text, fill="black", font=('Helvetica 15 bold'))
+                canvas.create_text(10, 90, text="App Startup:  " + app.text, fill="black", font=('Helvetica 15 bold'), anchor='w')
                 canvas.pack()
                 AppStartup.append(app.text)
                 all_scores.append(app.text)
     
             for video in root.iter('VideoConferencingScore'):
                 print(video.text)
-                canvas.create_text(150, 170, text="Video Confrencing:  " + video.text, fill="black", font=('Helvetica 15 bold'))
+                canvas.create_text(10, 110, text="Video Confrencing:  " + video.text, fill="black", font=('Helvetica 15 bold'), anchor='w')
                 canvas.pack()
                 VideoConfrence.append(video.text)
                 all_scores.append(video.text)
     
             for web in root.iter('WebBrowsingScore'):
                 print(web.text)
-                canvas.create_text(150, 190, text="Web Browsing:  " + web.text, fill="black", font=('Helvetica 15 bold'))
+                canvas.create_text(10, 130, text="Web Browsing:  " + web.text, fill="black", font=('Helvetica 15 bold'), anchor='w')
                 canvas.pack()
                 WebBrowsing.append(web.text)
                 all_scores.append(web.text)
     
             for spread in root.iter('SpreadsheetsScore'):
                 print(spread.text)
-                canvas.create_text(150, 210, text="Spreadsheets:  " + spread.text, fill="black", font=('Helvetica 15 bold'))
+                canvas.create_text(10, 150, text="Spreadsheets:  " + spread.text, fill="black", font=('Helvetica 15 bold'), anchor='w')
                 canvas.pack()
                 Spreadsheet.append(spread.text)
                 all_scores.append(spread.text)
     
             for write in root.iter('WritingScore'):
                 print(write.text)
-                canvas.create_text(150, 230, text="Writing:  " + write.text, fill="black", font=('Helvetica 15 bold'))
+                canvas.create_text(10, 170, text="Writing:  " + write.text, fill="black", font=('Helvetica 15 bold'), anchor='w')
                 canvas.pack()
                 Writing.append(write.text)
                 all_scores.append(write.text)
     
             for photo in root.iter('PhotoEditingScore'):
                 print(photo.text)
-                canvas.create_text(150, 250, text="Photo Editing:  " + photo.text, fill="black", font=('Helvetica 15 bold'))
+                canvas.create_text(10, 190, text="Photo Editing:  " + photo.text, fill="black", font=('Helvetica 15 bold'), anchor='w')
                 canvas.pack()
                 PhotoEditing.append(photo.text)
                 all_scores.append(photo.text)
     
             for render in root.iter('RenderingAndVisualizationScore'):
                 print(render.text)
-                canvas.create_text(150, 270, text="Rendering and Visualization:  " + render.text, fill="black", font=('Helvetica 15 bold'))
+                canvas.create_text(10, 210, text="Rendering and Visualization:  " + render.text, fill="black", font=('Helvetica 15 bold'), anchor='w')
                 canvas.pack()
                 RenderVisual.append(render.text)
                 all_scores.append(render.text)
     
             for videoedit in root.iter('VideoEditingScore'):
                 print(videoedit.text)
-                canvas.create_text(150, 290, text="Video Editing:  " + videoedit.text, fill="black", font=('Helvetica 15 bold'))
+                canvas.create_text(10, 230, text="Video Editing:  " + videoedit.text, fill="black", font=('Helvetica 15 bold'), anchor='w')
                 canvas.pack()
                 VideoEditing.append(videoedit.text)
                 all_scores.append(videoedit.text)
@@ -173,6 +173,8 @@ def PC_mark10(file, sheet):
             "App Startup", "Video Conferencing", "Web Browsing", "Spreadsheets", "Writing", "Photo Editing",
             "Render and Visualization", "Video Editing"]
 
+
+            # Add the data to a new worksheet inside the workbook created in the main function.
             my_worksheet = sheet.add_worksheet()
             my_worksheet.set_column('A:A', 20)
             my_worksheet.write('A1', 'Overall Score')
@@ -214,7 +216,7 @@ def crossmark(file, sheet):
             # Set a window colour
             window.configure(bg = 'gray18')
 
-            canvas = Canvas(window, width= 1000, height= 750, bg="White")
+            canvas = Canvas(window, width= 500, height= 250, bg="White")
 
             close_benchmark = Button(window, text = "Next Benchmark", command = window.quit)
             close_benchmark.pack(pady=20)
@@ -230,22 +232,22 @@ def crossmark(file, sheet):
                 content = f.readlines()
     
             print("Parsing Crossmark file...")
-            canvas.create_text(150, 290, text="Overall Score:  " + content[17], fill="black", font=('Helvetica 15 bold'))
+            canvas.create_text(10, 30, text="Overall Score:  " + content[17], fill="black", font=('Helvetica 15 bold'), anchor='w')
             print("Overall score: " + content[17])
             list.append(content[17])
             canvas.pack()
     
-            canvas.create_text(150, 310, text="Productivity:  " + content[19], fill="black", font=('Helvetica 15 bold'))
+            canvas.create_text(10, 50, text="Productivity:  " + content[19], fill="black", font=('Helvetica 15 bold'), anchor='w')
             print("Productivity: " + content[19])
             list.append(content[19])
             canvas.pack()
     
-            canvas.create_text(150, 330, text="Creativity:  " + content[21], fill="black", font=('Helvetica 15 bold'))
+            canvas.create_text(10, 70, text="Creativity:  " + content[21], fill="black", font=('Helvetica 15 bold'), anchor='w')
             print("Creativity: " + content[21])
             list.append(content[21])
             canvas.pack()
     
-            canvas.create_text(150, 350, text="Responsiveness:  " + content[23], fill="black", font=('Helvetica 15 bold'))
+            canvas.create_text(10, 90, text="Responsiveness:  " + content[23], fill="black", font=('Helvetica 15 bold'), anchor='w')
             print("Responsiveness: " + content[23])
             list.append(content[23])
             canvas.pack()
