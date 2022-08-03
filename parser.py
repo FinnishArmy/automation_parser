@@ -31,21 +31,8 @@ from turtle import clear
 import pandas
 from tkinter import *
 
-def excel_creator():
-    #check if excel sheet is there, if so, clean, if not make it
-    file_exists = os.path.exists('benchmarks.xlsx')
-    print(file_exists)
 
-    if file_exists != True:
-        workbook = xlsxwriter.Workbook('benchmarks.xlsx')
-        worksheet = workbook.add_worksheet()
-
-        workbook.close()
-
-    else:
-        print("Excel sheet already exists!")
-        pass
-
+# PC Mark 10 Benchmark
 def PC_mark10(file, sheet):
             window = Tk()
 
@@ -213,6 +200,9 @@ def PC_mark10(file, sheet):
             my_worksheet.write('A12', 'Video Editing')
             my_worksheet.write('B12', all_scores[11])
 
+
+
+# Crossmark Benchmark
 def crossmark(file, sheet):
             window = Tk()
 
@@ -276,6 +266,8 @@ def crossmark(file, sheet):
 
             print("Parse complete.")
 
+
+# Get the average power.
 def mcp_power(file):
             print("Test")
             window = Tk()
