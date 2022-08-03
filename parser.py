@@ -46,7 +46,7 @@ def excel_creator():
         print("Excel sheet already exists!")
         pass
 
-def PC_mark10(file):
+def PC_mark10(file, sheet):
             window = Tk()
 
             # Set the window title name
@@ -186,12 +186,34 @@ def PC_mark10(file):
             "App Startup", "Video Conferencing", "Web Browsing", "Spreadsheets", "Writing", "Photo Editing",
             "Render and Visualization", "Video Editing"]
 
-            data = pd.DataFrame({col2:all_scores})
+            my_worksheet = sheet.add_worksheet()
+            my_worksheet.set_column('A:A', 20)
+            my_worksheet.write('A1', 'Overall Score')
+            my_worksheet.write('B1', all_scores[0])
+            my_worksheet.write('A2', 'Essentials')
+            my_worksheet.write('B2', all_scores[1])
+            my_worksheet.write('A3', 'Productivity')
+            my_worksheet.write('B3', all_scores[2])
+            my_worksheet.write('A4', 'Digital Content Creation')
+            my_worksheet.write('B4', all_scores[3])
+            my_worksheet.write('A5', 'App Startup')
+            my_worksheet.write('B5', all_scores[4])
+            my_worksheet.write('A6', 'Video Conferencing')
+            my_worksheet.write('B6', all_scores[5])
+            my_worksheet.write('A7', 'Web Browsing')
+            my_worksheet.write('B7', all_scores[6])
+            my_worksheet.write('A8', 'Spreadsheets')
+            my_worksheet.write('B8', all_scores[7])
+            my_worksheet.write('A9', 'Writing')
+            my_worksheet.write('B9', all_scores[8])
+            my_worksheet.write('A10', 'Photo Editing')
+            my_worksheet.write('B10', all_scores[9])
+            my_worksheet.write('A11', 'Render and Visual')
+            my_worksheet.write('B11', all_scores[10])
+            my_worksheet.write('A12', 'Video Editing')
+            my_worksheet.write('B12', all_scores[11])
 
-            # use variables
-            data.to_excel('pcmark10_data.xlsx', sheet_name='pcmark 10 scores', index=False)
-
-def crossmark(file):
+def crossmark(file, sheet):
             window = Tk()
 
             # Set the window title name
@@ -240,8 +262,17 @@ def crossmark(file):
 
             score_name = ['Overall Score', 'Productivity', 'Creativity', 'Responsiveness']
             col1 = 'Crossmark'
-            data = pd.DataFrame({col1:score_name, col:list})
-            data.to_excel('cross_mark data.xlsx', sheet_name='data', index=False)
+
+            my_worksheet = sheet.add_worksheet()
+            my_worksheet.set_column('A:A', 20)
+            my_worksheet.write('A1', 'Overall Score')
+            my_worksheet.write('A2', 'Productivity')
+            my_worksheet.write('A3', 'Creativity')
+            my_worksheet.write('A4', 'Responsiveness')
+            my_worksheet.write('B1', list[0])
+            my_worksheet.write('B2', list[1])
+            my_worksheet.write('B3', list[2])
+            my_worksheet.write('B4', list[3])
 
             print("Parse complete.")
 
@@ -314,7 +345,16 @@ def main():
     # Ask user for the csv file
     window.filename = filedialog.askopenfilenames(initialdir= "/", title = "Select Participant Log File")
 
-    excel_creator()
+    #check if excel sheet is there, if so, clean, if not make it
+    file_exists = os.path.exists('benchmarks.xlsx')
+
+    if file_exists != True:
+        workbook = xlsxwriter.Workbook('benchmarks.xlsx')
+
+    else:
+        print("Excel sheet already exists!")
+        pass
+
 
 
     # Automatically detect which benchmark was selected.
@@ -322,20 +362,22 @@ def main():
     for file in window.filename:
         # If it's a PCMark10 benchmark, call the proper function
         if "PCMark10" in file:
-            PC_mark10(file)
+            PC_mark10(file, workbook)
     
 
         # If it's a Crossmark benchmark, call the proper function.
         if "default" in file:
-            crossmark(file)
+            crossmark(file, workbook)
 
         if "summary" in file:
             mcp_power(file)
     
         else:
             print("Not a valid file type.")
-            
+
         window.mainloop()
+
+    workbook.close()
 
 if __name__ == "__main__":
     main()
