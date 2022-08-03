@@ -354,7 +354,6 @@ def main():
 
     else:
         print("Excel sheet already exists! Deleting previous sheet")
-        os.remove('benchmarks.xlsx')
         workbook = xlsxwriter.Workbook('benchmarks.xlsx')
 
 
