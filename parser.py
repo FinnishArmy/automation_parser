@@ -7,7 +7,7 @@
 # pip install openpyxl (3.0.10)     #
 # pip install xlsxwriter (3.0.3)    #
 # pip install pandas (1.4.2)        #
-# python 2.7.18                     #
+# python 3.9.12                     #
 # Linux: sudo pacman -S tk          #
 # MacOS: brew install python-tk     #
 #####################################
