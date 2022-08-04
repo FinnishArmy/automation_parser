@@ -17,12 +17,7 @@ from openpyxl.worksheet.dimensions import *
 # MacOS: brew install python-tk     #
 #####################################
 
-def main():
-    cd = Workbook()
-
-    # Make the workbook active
-    cd_data = cd.active
-
+def template(cd_data):
     # Setup basic layout
     cd_data['A1'] = "[Insert DUT]"
     cd_data['A6'].fill = PatternFill('solid', start_color="00FF9900")
@@ -63,7 +58,14 @@ def main():
     cd_data['D5'] = "R3"
     cd_data.column_dimensions['A'].width = 17
 
+def main():
+    cd = Workbook()
 
+    # Make the workbook active
+    cd_data = cd.active
+
+    # Make template
+    template(cd_data)
 
     # Save the workbook
     cd.save("combined_Data.xlsx")
