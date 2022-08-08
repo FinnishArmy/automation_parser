@@ -312,9 +312,6 @@ def pick_file(window, workbook):
         # If it's a power data file, call the proper function.
         if "summary" in file:
             mcp_power(file)
-    
-        else:
-            print("Not a valid file type.")
 
         window.mainloop()
 
