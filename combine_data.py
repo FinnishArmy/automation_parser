@@ -59,26 +59,41 @@ def template(cd_data):
             check_data_b = cd_data['B']
             check_data_c = cd_data['C']
 
-            if check_data_b[21].value != None:
-                print("Run1 already is filled")
-                if check_data_c[21].value != None:
-                    cd_data.append({'D': cross_Data[index-1]})
-
-                if check_data_c[21].value == None:
-                    print("Population Run2")
-                    cd_data.append({'C': cross_Data[index-1]})
-
-
-            # Write to this column
             index = 0
-            if check_data_b[21].value == None:
+
+            # Check if Column for Run1 is clear for crossmark
+            if check_data_b[20].value != None:
+                print("Run1 already is filled")
+
+                # If Run 2 is full, write to column of Run 3
+                if check_data_c[20].value != None:
+                    for r3 in cross_Data:
+                        if index <= 3:
+                            index += 1
+                            cd_data.append({'D': cross_Data[index-1]})
+                cd_data.move_range("B25:B28", rows=-5, cols=0)
+
+                # Column for Run 2 writing
+                if check_data_c[20].value == None:
+                    print("Populating Run2")
+                    for r2 in cross_Data:
+                        if index <= 3:
+                            index += 1
+                            print(index)
+                            cd_data.append({'C': cross_Data[index-1]})
+                cd_data.move_range("B25:B28", rows=-5, cols=1)
+
+
+            # Column for Run 1 writing
+            if check_data_b[20].value == None:
                 print("Populating Run1")
                 for p in cross_Data:
                     if index <= 3:
                         index += 1
                         #print(cross_Data[index-1])
-                        cd_data.append({'B': cross_Data[index-1]})
-            cd_data.move_range("B25:B28", rows=-5, cols=0)
+                        print(index)
+                        cd_data.append({'C': cross_Data[index-1]})
+            cd_data.move_range("B25:B28", rows= -5, cols=0)
 
 
 
