@@ -21,7 +21,7 @@ from os.path import exists
 #####################################
 
 
-def template(cd_data):
+def template(cd_data, cd):
 
         # Open the benchmakrs excel sheet, but make sure it exists.
     path = 'benchmarks.xlsx'
@@ -58,31 +58,9 @@ def template(cd_data):
 
             check_data_b = cd_data['B']
             check_data_c = cd_data['C']
+            check_data_d = cd_data['D']
 
             index = 0
-
-            # Check if Column for Run1 is clear for crossmark
-            if check_data_b[20].value != None:
-                print("Run1 already is filled")
-
-                # If Run 2 is full, write to column of Run 3
-                if check_data_c[20].value != None:
-                    for r3 in cross_Data:
-                        if index <= 3:
-                            index += 1
-                            cd_data.append({'D': cross_Data[index-1]})
-                cd_data.move_range("B25:B28", rows=-5, cols=0)
-
-                # Column for Run 2 writing
-                if check_data_c[20].value == None:
-                    print("Populating Run2")
-                    for r2 in cross_Data:
-                        if index <= 3:
-                            index += 1
-                            print(index)
-                            cd_data.append({'C': cross_Data[index-1]})
-                cd_data.move_range("B25:B28", rows=-5, cols=1)
-
 
             # Column for Run 1 writing
             if check_data_b[20].value == None:
@@ -90,10 +68,36 @@ def template(cd_data):
                 for p in cross_Data:
                     if index <= 3:
                         index += 1
-                        #print(cross_Data[index-1])
-                        print(index)
                         cd_data.append({'B': cross_Data[index-1]})
-            cd_data.move_range("B25:B28", rows= -5, cols=0)
+                print("Moving data to Run 1")
+                cd_data.move_range("B25:B28", rows= -5, cols=0)
+                cd.save("combined_Data.xlsx")
+
+
+            # Column for Run 1 is populated
+            if check_data_b[20].value != None:
+
+                # Column for Run 2 writing
+                if check_data_c[20].value == None:
+                    print("Populating Run2")
+                    for r2 in cross_Data:
+                        if index <= 3:
+                            index += 1
+                            cd_data.append({'C': cross_Data[index-1]})
+                    print("Moving data to Run 2")
+                    cd_data.move_range("C25:C28", rows= -5, cols=0)
+                    cd.save("combined_Data.xlsx")
+
+                # Column for Run 3 writing
+                if check_data_c[20].value != None:
+                    print("Populating Run 3")
+                    for r3 in cross_Data:
+                        if index <= 3:
+                            index += 1
+                            cd_data.append({'D': cross_Data[index-1]})
+                    print("Moving data to Run 3")
+                    cd_data.move_range("D25:D28", rows=-5, cols=0)
+                    cd.save("combined_Data.xlsx")
 
 
 
@@ -166,7 +170,7 @@ def main():
 
 
     # Make template
-    template(cd_data)
+    template(cd_data, cd)
 
     # Save the workbook
     cd.save("combined_Data.xlsx")
