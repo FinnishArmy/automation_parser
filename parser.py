@@ -37,7 +37,7 @@ def PC_mark10(file, sheet):
             window = Tk()
 
             # Set the window title name
-            window.title("DTT Parser")
+            window.title("PCMark10")
             # Set a width and height
             window.configure(width = 200, height = 200)
 
@@ -189,6 +189,8 @@ def PC_mark10(file, sheet):
             my_worksheet.write('A12', 'Video Editing')
             my_worksheet.write('B12', all_scores[11])
 
+            mcp_power(sheet)
+
 
 
 # Crossmark Benchmark
@@ -196,7 +198,7 @@ def crossmark(file, sheet):
             window = Tk()
 
             # Set the window title name
-            window.title("DTT Parser")
+            window.title("Crossmark")
             # Set a width and height
             window.configure(width = 500, height = 300)
 
@@ -253,11 +255,10 @@ def crossmark(file, sheet):
 
 # Get the average power.
 def mcp_power(file):
-            print("Test")
             window = Tk()
 
             # Set the window title name
-            window.title("DTT Parser")
+            window.title("Power")
             # Set a width and height
             window.configure(width = 350, height = 350)
 
@@ -269,8 +270,6 @@ def mcp_power(file):
             close_benchmark = Button(window, text = "Next Benchmark", command = window.quit).pack(pady=5)
 
             exit_program = Button(window, text = "Exit application", command = window.destroy).pack(pady=5)
-
-            print(file)
 
             power = []
 
@@ -293,15 +292,89 @@ def mcp_power(file):
 
             print(s.strip('[]').strip("'").split(',')[3].strip())
 
+def cinebench_multicore(file):
+    print("Cinebench MultiThread Detected")
+    window = Tk()
 
+    # Set the window title name
+    window.title("Cinebench")
+     # Set a width and height
+    window.configure(width = 350, height = 350)
+
+    # Set a window colour
+    window.configure(bg = 'gray18')
+
+    canvas = Canvas(window, width= 250, height= 250, bg="White")
+
+    close_benchmark = Button(window, text = "Next Benchmark", command = window.quit).pack(pady=5)
+
+    exit_program = Button(window, text = "Exit application", command = window.destroy).pack(pady=5)
+
+    score = []
+
+    # Convert the file to a string, split the csv data at the commas
+    # convert the list into a string and grab line 332
+    # remove the brackets, commans and print out the value
+    file: str
+    with open(file) as fd:
+        for line in fd.readlines():
+            score.append(line.split(','))
+
+    result = (str(score[-2]))
+    final_string = result[5:9]
+    print(final_string)
+
+    canvas.create_text(90, 50, text="Multi: " + final_string, fill="black", font=('Helvetica 15 bold'), anchor='w')
+    canvas.pack()
+
+
+
+
+
+
+def cinebench_singlecore(file):
+    print("Cinebench SingleThread Detected")
+    window = Tk()
+
+    # Set the window title name
+    window.title("Cinebench")
+     # Set a width and height
+    window.configure(width = 350, height = 350)
+
+    # Set a window colour
+    window.configure(bg = 'gray18')
+
+    canvas = Canvas(window, width= 250, height= 250, bg="White")
+
+    close_benchmark = Button(window, text = "Next Benchmark", command = window.quit).pack(pady=5)
+
+    exit_program = Button(window, text = "Exit application", command = window.destroy).pack(pady=5)
+
+    score = []
+
+    # Convert the file to a string, split the csv data at the commas
+    # convert the list into a string and grab line 332
+    # remove the brackets, commans and print out the value
+    file: str
+    with open(file) as fd:
+        for line in fd.readlines():
+            score.append(line.split(','))
+
+    result = (str(score[-2]))
+    final_string = result[5:9]
+    print(final_string)
+
+    canvas.create_text(90, 50, text="Single: " + final_string, fill="black", font=('Helvetica 15 bold'), anchor='w')
+    canvas.pack()
 
 # Automatically detect which benchmark was selected.
 def pick_file(window, workbook):
 
     file: str
     for file in window.filename:
+        print(window.filename)
         # If it's a PCMark10 benchmark, call the proper function
-        if "result" in file:
+        if "PCMark10" in file:
             PC_mark10(file, workbook)
     
 
@@ -312,6 +385,14 @@ def pick_file(window, workbook):
         # If it's a power data file, call the proper function.
         if "summary" in file:
             mcp_power(file)
+
+        # If it's a cinebench multithreaded txt, call the proper function.
+        if "MultiThreaded" in file:
+            cinebench_multicore(file)
+
+        # If it's a cinebench singlethreaded txt, call the proper function.
+        if "SingleThreaded" in file:
+            cinebench_singlecore(file)
 
         window.mainloop()
 
