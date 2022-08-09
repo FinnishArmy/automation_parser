@@ -92,7 +92,7 @@ def template(cd_data):
                         index += 1
                         #print(cross_Data[index-1])
                         print(index)
-                        cd_data.append({'C': cross_Data[index-1]})
+                        cd_data.append({'B': cross_Data[index-1]})
             cd_data.move_range("B25:B28", rows= -5, cols=0)
 
 
