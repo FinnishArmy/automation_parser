@@ -20,51 +20,8 @@ from os.path import exists
 # MacOS: brew install python-tk     #
 #####################################
 
-def open_excel():
-    pass
-
 
 def template(cd_data):
-    # Setup the headers in a dict
-    headers_a = (
-        ('[Insert DUT]', None), ('Power Slider Mode', None, '[Insert AC/DC]'), ('EPP (for reference)', None), 
-        ('[Insert DUT Info]', None), ('Run', 'R1', 'R2', 'R3'), ('PCMark10 Score', None), ('Essentials', None), 
-        ('Productivity', None), ('Dig Content Creation', None), ('App Startup', None), ('Video Confrencing', None),
-        ('Web Browsing', None), ('Spreadsheet', None), ('Writing', None), ('Photo Editing', None), 
-        ('Render and Visual', None), ('Video Editing', None), ('DAQ MCP Power', None), ('Perf/Watt', None), 
-        ('Crossmark Score', None), ('Productivity', None), ('Creativity', None), ('Responsiveness', None), 
-        ('DAQ MCP Power', None))
-
-    # Go through each dict entry and add it to the worksheet
-    for i in headers_a:
-        print(i)
-        cd_data.append(i)
-
-    # Fix up alignment
-    cd_data['C4'].alignment = Alignment(horizontal='center')
-    cd_data.column_dimensions['A'].width = 17
-
-    int = 0
-
-    # Set the colours and make it magical
-    for cell in cd_data['A']:
-        if cell.value != None:
-            int = int+1
-
-            if (6<=int<=9):
-                cd_data['A' + str(int)].fill = PatternFill('solid', start_color="00FF9900")
-
-            if (20<=int<=20):
-                cd_data['A' + str(int)].fill = PatternFill('solid', start_color="00FF9900")
-
-            if (21<=int<=23):
-                cd_data['A' + str(int)].fill = PatternFill('solid', start_color="00FFCC99")
-
-            if (10<=int<=17):
-                cd_data['A' + str(int)].fill = PatternFill('solid', start_color="00FFCC99")
-            
-            if (18<=int<=19):
-                cd_data['A' + str(int)].fill = PatternFill('solid', start_color="00C0C0C0")
 
         # Open the benchmakrs excel sheet, but make sure it exists.
     path = 'benchmarks.xlsx'
@@ -83,10 +40,19 @@ def template(cd_data):
             print("Crossmark data detected, compiling information")
 
             cross_Data = []
+
             # Loop through the column and get the values.
             for x in range(len(second_col)):
-                cross_Data.append(second_col[x].value)
-                print(second_col[x].value)
+                # Grab the row column value
+                this = second_col[x].value.strip()
+
+                 # Add to our tuple with a None value afterwards to help later with appending
+                cross_Data += (this,) 
+                
+                # Remove the inital None temp value each iteration
+                #result = [i[1:] for i in cross_Data]
+
+
 
             # Move to the next column
 
@@ -96,31 +62,23 @@ def template(cd_data):
             if check_data_b[21].value != None:
                 print("Run1 already is filled")
                 if check_data_c[21].value != None:
-                    print("Run2 already is filled")
+                    cd_data.append({'D': cross_Data[index-1]})
 
                 if check_data_c[21].value == None:
                     print("Population Run2")
-                    cd_data['C20'] = cross_Data[0]
-                    cd_data['C21'] = cross_Data[1]
-                    cd_data['C22'] = cross_Data[2]
-                    cd_data['C23'] = cross_Data[3]
+                    cd_data.append({'C': cross_Data[index-1]})
+
 
             # Write to this column
+            index = 0
             if check_data_b[21].value == None:
                 print("Populating Run1")
-                cd_data['B20'] = cross_Data[0]
-                cd_data['B21'] = cross_Data[1]
-                cd_data['B22'] = cross_Data[2]
-                cd_data['B23'] = cross_Data[3]
-                
-                
-                
-                
-
-
-            # Paste info into next free column in cd_data
-            # .append to not overwrite info
-
+                for p in cross_Data:
+                    if index <= 3:
+                        index += 1
+                        #print(cross_Data[index-1])
+                        cd_data.append({'B': cross_Data[index-1]})
+            cd_data.move_range("B25:B28", rows=-5, cols=0)
 
 
 
@@ -131,7 +89,7 @@ def template(cd_data):
             # Loop through the column and get the values.
             for x in range(len(second_col)):
                 pc_Data = second_col[x].value
-                print(second_col[x].value)
+                #print(second_col[x].value)
             
 
     else:
@@ -140,10 +98,57 @@ def template(cd_data):
 
 
 def main():
-    cd = Workbook()
 
-    # Make the workbook active
-    cd_data = cd.active
+    file_exists = exists("combined_Data.xlsx")
+
+    if file_exists == True:
+        cd = load_workbook(filename= "combined_Data.xlsx")
+        cd_data = cd.active
+
+    if file_exists == False:
+        cd = Workbook()
+        cd_data = cd.active
+        # Setup the headers in a dict
+        headers_a = (
+            ('[Insert DUT]', None), ('Power Slider Mode', None, '[Insert AC/DC]'), ('EPP (for reference)', None), 
+            ('[Insert DUT Info]', None), ('Run', 'R1', 'R2', 'R3'), ('PCMark10 Score', None), ('Essentials', None), 
+            ('Productivity', None), ('Dig Content Creation', None), ('App Startup', None), ('Video Confrencing', None),
+            ('Web Browsing', None), ('Spreadsheet', None), ('Writing', None), ('Photo Editing', None), 
+            ('Render and Visual', None), ('Video Editing', None), ('DAQ MCP Power', None), ('Perf/Watt', None), 
+            ('Crossmark Score', None), ('Productivity', None), ('Creativity', None), ('Responsiveness', None), 
+            ('DAQ MCP Power', None))
+
+        # Go through each dict entry and add it to the worksheet
+        for i in headers_a:
+            cd_data.append(i)
+
+        # Fix up alignment
+        cd_data['C4'].alignment = Alignment(horizontal='center')
+        cd_data.column_dimensions['A'].width = 17
+
+        int = 0
+
+        # Set the colours and make it magical
+        for cell in cd_data['A']:
+            if cell.value != None:
+                int = int+1
+
+                if (6<=int<=9):
+                    cd_data['A' + str(int)].fill = PatternFill('solid', start_color="00FF9900")
+
+                if (20<=int<=20):
+                    cd_data['A' + str(int)].fill = PatternFill('solid', start_color="00FF9900")
+
+                if (21<=int<=23):
+                    cd_data['A' + str(int)].fill = PatternFill('solid', start_color="00FFCC99")
+
+                if (10<=int<=17):
+                    cd_data['A' + str(int)].fill = PatternFill('solid', start_color="00FFCC99")
+                
+                if (18<=int<=19):
+                    cd_data['A' + str(int)].fill = PatternFill('solid', start_color="00C0C0C0")
+
+
 
     # Make template
     template(cd_data)
