@@ -46,16 +46,11 @@ def template(cd_data, cd):
                 # Grab the row column value
                 this = second_col[x].value.strip()
 
-                 # Add to our tuple with a None value afterwards to help later with appending
-                cross_Data += (this,) 
-                
-                # Remove the inital None temp value each iteration
-                #result = [i[1:] for i in cross_Data]
-
+                 # Add to our tuple, use for appending
+                cross_Data += (this, )  
 
 
             # Move to the next column
-
             check_data_b = cd_data['B']
             check_data_c = cd_data['C']
             check_data_d = cd_data['D']
@@ -105,10 +100,60 @@ def template(cd_data, cd):
         if cell_obj.value == 'Essentials':
             print("PCMark10 data detected, compiling information")
 
+            pc_Data = []
+
             # Loop through the column and get the values.
-            for x in range(len(second_col)):
-                pc_Data = second_col[x].value
-                #print(second_col[x].value)
+
+            for y in range(len(second_col)):
+                # Grab the row column values
+                that = second_col[y].value
+                
+                # Add to our tuple, use for appending
+                pc_Data += (that, )
+
+            # Move to the next column
+            check_data_b = cd_data['B']
+            check_data_c = cd_data['C']
+            check_data_d = cd_data['D']     
+
+            pc_index = 0
+
+            # Column for Run 1 Writing
+            if check_data_b[6].value == None:   
+                print("Populating Run 1")
+                for r1 in pc_Data:
+                    if pc_index <= 11:
+                        pc_index += 1
+
+                        cd_data.append({'B': pc_Data[pc_index-1]})
+                print("Moving data to Run 1")
+                cd_data.move_range("B25:B36", rows= -19, cols=0)
+                cd.save("combined_Data.xlsx")
+
+            # Column for Run 1 is populated
+            if check_data_b[6].value != None:
+                
+                # Column for Run 2 writing
+                if check_data_c[6].value == None:
+                    print("Populated Run2")
+                    for pc_r2 in pc_Data:
+                        if pc_index <= 11:
+                            pc_index += 1
+                            pc_Data.append({'C': pc_Data[pc_index-1]})
+                    print("Moving data to Run 2")
+                    cd_data.move_range("C25:C36", rows= -19, cols=0)
+                    cd.save("combined_Data.xlsx")
+
+                # Column for Run 3 writing
+                if check_data_c[6].value != None:
+                    print("Populating Run 3")
+                    for pc_r3 in cross_Data:
+                        if index <= 11:
+                            pc_index += 1
+                            cd_data.append({'D': cross_Data[index-1]})
+                    print("Moving data to Run 3")
+                    cd_data.move_range("D25:D36", rows=-19, cols=0)
+                    cd.save("combined_Data.xlsx")
             
 
     else:

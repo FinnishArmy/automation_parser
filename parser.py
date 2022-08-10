@@ -189,7 +189,7 @@ def PC_mark10(file, sheet):
             my_worksheet.write('A12', 'Video Editing')
             my_worksheet.write('B12', all_scores[11])
 
-            mcp_power(sheet)
+            #mcp_power(sheet)
 
 
 
@@ -282,7 +282,7 @@ def mcp_power(file):
                     power.append(line.split(','))
 
             mcp = []
-            mcp.append(power[332])
+            mcp.append(power[291])
             
             s = ''.join(str(x) for x in mcp)
 
@@ -372,12 +372,11 @@ def pick_file(window, workbook):
 
     file: str
     for file in window.filename:
-        print(window.filename)
         # If it's a PCMark10 benchmark, call the proper function
-        if "PCMark10" in file:
+        if ".xml" in file: #Instead check the type
+            print("PCMARK10")
             PC_mark10(file, workbook)
     
-
         # If it's a Crossmark benchmark, call the proper function.
         if "default" in file:
             crossmark(file, workbook)
