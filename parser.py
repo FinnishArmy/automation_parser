@@ -27,7 +27,6 @@ import csv
 
 # UI
 from tkinter import filedialog
-from turtle import clear
 import pandas
 from tkinter import *
 

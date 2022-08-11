@@ -2,7 +2,6 @@
 
 # Ronny Z. Valtonen
 
-from cgi import test
 from openpyxl import *
 import openpyxl
 from openpyxl.styles import *
@@ -26,17 +25,22 @@ def template(cd_data, cd):
         # Open the benchmakrs excel sheet, but make sure it exists.
     path = 'benchmarks.xlsx'
 
+    # Get the worksheets to loop through
+    wb = load_workbook(path)
     file_exists = exists(path)
 
-    if file_exists == True:
-        wb_obj = openpyxl.load_workbook(path)
-        sheet_obj = wb_obj.active
-        cell_obj = sheet_obj.cell(row=2, column=1)
+    for sheet in wb:
+        print(sheet)
+        if file_exists == True:
+            wb_obj = openpyxl.load_workbook(path)
+            sheet_obj = wb_obj.active
+            cell_obj = sheet_obj.cell(row=2, column=1)
 
-        second_col = sheet_obj['B']
-
+            second_col = sheet_obj['B']
+            new_sheet = sheet.cell(row=2, column=1)
+            print(new_sheet.value)
         # Crossmark
-        if cell_obj.value == 'Productivity':
+        if new_sheet.value == 'Productivity':
             print("Crossmark data detected, compiling information")
 
             cross_Data = []
@@ -46,7 +50,7 @@ def template(cd_data, cd):
                 # Grab the row column value
                 this = second_col[x].value.strip()
 
-                 # Add to our tuple, use for appending
+                # Add to our tuple, use for appending
                 cross_Data += (this, )  
 
 
@@ -66,7 +70,7 @@ def template(cd_data, cd):
                         cd_data.append({'B': cross_Data[index-1]})
                 print("Moving data to Run 1")
                 cd_data.move_range("B25:B28", rows= -5, cols=0)
-                cd.save("combined_Data.xlsx")
+                #cd.save("combined_Data.xlsx")
 
 
             # Column for Run 1 is populated
@@ -81,7 +85,7 @@ def template(cd_data, cd):
                             cd_data.append({'C': cross_Data[index-1]})
                     print("Moving data to Run 2")
                     cd_data.move_range("C25:C28", rows= -5, cols=0)
-                    cd.save("combined_Data.xlsx")
+                    #cd.save("combined_Data.xlsx")
 
                 # Column for Run 3 writing
                 if check_data_c[20].value != None:
@@ -92,12 +96,12 @@ def template(cd_data, cd):
                             cd_data.append({'D': cross_Data[index-1]})
                     print("Moving data to Run 3")
                     cd_data.move_range("D25:D28", rows=-5, cols=0)
-                    cd.save("combined_Data.xlsx")
+                    #cd.save("combined_Data.xlsx")
 
 
 
         # PCMark10
-        if cell_obj.value == 'Essentials':
+        if new_sheet.value == 'Essentials':
             print("PCMark10 data detected, compiling information")
 
             pc_Data = []
@@ -127,7 +131,7 @@ def template(cd_data, cd):
                         cd_data.append({'B': pc_Data[pc_index-1]})
                 print("Moving data to Run 1")
                 cd_data.move_range("B25:B36", rows= -19, cols=0)
-                cd.save("combined_Data.xlsx")
+                #cd.save("combined_Data.xlsx")
 
             # Column for Run 1 is populated
             if check_data_b[6].value != None:
@@ -141,8 +145,8 @@ def template(cd_data, cd):
                             cd_data.append({'C': pc_Data[pc_index-1]})
                     print("Moving data to Run 2")
                     
-                    cd_data.move_range("C25:C36", rows= -19, cols=0)
-                    cd.save("combined_Data.xlsx")
+                    cd_data.move_range("C37:C48", rows= -31, cols=0)
+                    #cd.save("combined_Data.xlsx")
 
                 # Column for Run 3 writing
                 if check_data_c[6].value != None:
@@ -153,8 +157,8 @@ def template(cd_data, cd):
                             cd_data.append({'D': pc_Data[pc_index-1]})
                     print("Moving data to Run 3")
                     cd_data.move_range("D25:D36", rows=-19, cols=0)
-                    cd.save("combined_Data.xlsx")
-            
+                    #cd.save("combined_Data.xlsx")
+        cd.save("combined_Data.xlsx")
 
     else:
         print("Benchmark data does not exist.")
@@ -212,12 +216,8 @@ def main():
                 if (18<=int<=19):
                     cd_data['A' + str(int)].fill = PatternFill('solid', start_color="00C0C0C0")
 
-
-
     # Make template
     template(cd_data, cd)
-
-
 
     # Save the workbook
     cd.save("combined_Data.xlsx")
