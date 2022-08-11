@@ -2,6 +2,7 @@
 
 # Ronny Z. Valtonen
 
+from hashlib import new
 from openpyxl import *
 import openpyxl
 from openpyxl.styles import *
@@ -28,17 +29,17 @@ def template(cd_data, cd):
     # Get the worksheets to loop through
     wb = load_workbook(path)
     file_exists = exists(path)
+    workbook = load_workbook(filename=path)
 
-    for sheet in wb:
-        print(sheet)
+    sh = cd.active
+
+    for sheet_name in workbook.sheetnames:
         if file_exists == True:
-            wb_obj = openpyxl.load_workbook(path)
-            sheet_obj = wb_obj.active
-            cell_obj = sheet_obj.cell(row=2, column=1)
+            workbook.active = workbook[sheet_name]
+            second_col = workbook.active['B']
+            new_sheet = workbook.active.cell(row=2,column=1)
 
-            second_col = sheet_obj['B']
-            new_sheet = sheet.cell(row=2, column=1)
-            print(new_sheet.value)
+
         # Crossmark
         if new_sheet.value == 'Productivity':
             print("Crossmark data detected, compiling information")
@@ -96,7 +97,7 @@ def template(cd_data, cd):
                             cd_data.append({'D': cross_Data[index-1]})
                     print("Moving data to Run 3")
                     cd_data.move_range("D25:D28", rows=-5, cols=0)
-                    #cd.save("combined_Data.xlsx")
+                cd.save("combined_Data.xlsx")
 
 
 
@@ -105,7 +106,6 @@ def template(cd_data, cd):
             print("PCMark10 data detected, compiling information")
 
             pc_Data = []
-
             # Loop through the column and get the values.
 
             for y in range(len(second_col)):
@@ -131,6 +131,10 @@ def template(cd_data, cd):
                         cd_data.append({'B': pc_Data[pc_index-1]})
                 print("Moving data to Run 1")
                 cd_data.move_range("B25:B36", rows= -19, cols=0)
+
+                c1 = sh['B']
+                if c1[37].value != None:
+                    cd_data.move_range("B37:B40", rows= -31, cols=0)
                 #cd.save("combined_Data.xlsx")
 
             # Column for Run 1 is populated
@@ -146,6 +150,7 @@ def template(cd_data, cd):
                     print("Moving data to Run 2")
                     
                     cd_data.move_range("C37:C48", rows= -31, cols=0)
+                    cd_data.move_range("C29:C36", rows= -19, cols=0)
                     #cd.save("combined_Data.xlsx")
 
                 # Column for Run 3 writing
@@ -156,7 +161,9 @@ def template(cd_data, cd):
                             pc_index += 1
                             cd_data.append({'D': pc_Data[pc_index-1]})
                     print("Moving data to Run 3")
+
                     cd_data.move_range("D25:D36", rows=-19, cols=0)
+                    cd_data.move_range("D37:D40", rows= -31, cols=0)
                     #cd.save("combined_Data.xlsx")
         cd.save("combined_Data.xlsx")
 
