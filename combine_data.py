@@ -124,7 +124,6 @@ def template(cd_data, cd):
                 for r1 in pc_Data:
                     if pc_index <= 11:
                         pc_index += 1
-
                         cd_data.append({'B': pc_Data[pc_index-1]})
                 print("Moving data to Run 1")
                 cd_data.move_range("B25:B36", rows= -19, cols=0)
@@ -139,18 +138,19 @@ def template(cd_data, cd):
                     for pc_r2 in pc_Data:
                         if pc_index <= 11:
                             pc_index += 1
-                            pc_Data.append({'C': pc_Data[pc_index-1]})
+                            cd_data.append({'C': pc_Data[pc_index-1]})
                     print("Moving data to Run 2")
+                    
                     cd_data.move_range("C25:C36", rows= -19, cols=0)
                     cd.save("combined_Data.xlsx")
 
                 # Column for Run 3 writing
                 if check_data_c[6].value != None:
                     print("Populating Run 3")
-                    for pc_r3 in cross_Data:
-                        if index <= 11:
+                    for pc_r3 in pc_Data:
+                        if pc_index <= 11:
                             pc_index += 1
-                            cd_data.append({'D': cross_Data[index-1]})
+                            cd_data.append({'D': pc_Data[pc_index-1]})
                     print("Moving data to Run 3")
                     cd_data.move_range("D25:D36", rows=-19, cols=0)
                     cd.save("combined_Data.xlsx")
@@ -216,6 +216,8 @@ def main():
 
     # Make template
     template(cd_data, cd)
+
+
 
     # Save the workbook
     cd.save("combined_Data.xlsx")
