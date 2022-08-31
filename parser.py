@@ -442,7 +442,7 @@ def pick_file(window, workbook):
 
         # If it's a power data file, call the proper function.
         if "summary" in file:
-            mcp_power(file, workbook)
+            mcp_power(file)
 
         # If it's a cinebench multithreaded txt, call the proper function.
         if "MultiThreaded" in file:
