@@ -19,6 +19,7 @@ import numpy as np
 # Program
 import sys
 import os
+import json
 import subprocess
 import xml.etree.cElementTree as et
 from os.path import exists
@@ -291,7 +292,7 @@ def mcp_power(file):
 
             print(s.strip('[]').strip("'").split(',')[3].strip())
 
-def cinebench_multicore(file):
+def cinebench_multicore(file, sheet):
     print("Cinebench MultiThread Detected")
     window = Tk()
 
@@ -331,7 +332,7 @@ def cinebench_multicore(file):
 
 
 
-def cinebench_singlecore(file):
+def cinebench_singlecore(file, sheet):
     print("Cinebench SingleThread Detected")
     window = Tk()
 
@@ -366,14 +367,69 @@ def cinebench_singlecore(file):
     canvas.create_text(90, 50, text="Single: " + final_string, fill="black", font=('Helvetica 15 bold'), anchor='w')
     canvas.pack()
 
+def touch_xprt(file, sheet):
+    window = Tk()
+
+    # Set the window title name
+    window.title("Touch Xprt 2016")
+    # Set a width and height
+    window.configure(width = 200, height = 200)
+
+    # Set a window colour
+    window.configure(bg = 'gray18')
+
+    canvas = Canvas(window, width= 500, height= 250, bg="White")
+    # Set the tree to parse the file selected by the user
+    tree = et.parse(file)
+
+    root = tree.getroot()
+
+    # Setup empty score arrays
+    Overall_Score = []
+    Beautify = []
+    Blend = []
+    Convert = []
+    Music = []
+    Slideshow = []
+
+    all_scores = []
+
+    print("Under Testing")
+
+def geekbench(file, sheet):
+    window = Tk()
+
+    # Set the window title name
+    window.title("Geekbench")
+    # Set a width and height
+    window.configure(width = 200, height = 200)
+
+    # Set a window colour
+    window.configure(bg = 'gray18')
+
+    canvas = Canvas(window, width= 500, height= 250, bg="White")
+    print("TEST")
+    f = open(file)
+
+    data = json.load(f)
+
+    multi_score = data["multicore_score"]
+    single_score = data["score"]
+    print(multi_score)
+    print(single_score)
+
+    canvas.create_text(90, 50, text="Multicore Score: " + str(multi_score), fill="black", font=('Helvetica 15 bold'), anchor='w')
+    canvas.create_text(90, 80, text="Singlecore Score: " + str(single_score), fill="black", font=('Helvetica 15 bold'), anchor='w')
+    canvas.pack()
+
+
 # Automatically detect which benchmark was selected.
 def pick_file(window, workbook):
 
     file: str
     for file in window.filename:
         # If it's a PCMark10 benchmark, call the proper function
-        if ".xml" in file: #Instead check the type
-            print("PCMARK10")
+        if "PCMark10_result" in file: #Instead check the type
             PC_mark10(file, workbook)
     
         # If it's a Crossmark benchmark, call the proper function.
@@ -382,15 +438,22 @@ def pick_file(window, workbook):
 
         # If it's a power data file, call the proper function.
         if "summary" in file:
-            mcp_power(file)
+            mcp_power(file, workbook)
 
         # If it's a cinebench multithreaded txt, call the proper function.
         if "MultiThreaded" in file:
-            cinebench_multicore(file)
+            cinebench_multicore(file, workbook)
 
         # If it's a cinebench singlethreaded txt, call the proper function.
         if "SingleThreaded" in file:
-            cinebench_singlecore(file)
+            cinebench_singlecore(file, workbook)
+        
+        if "TouchXPRT" in file:
+            touch_xprt(file, workbook)
+
+        if "Geekbench" in file:
+            geekbench(file, workbook)
+        
 
         window.mainloop()
 
