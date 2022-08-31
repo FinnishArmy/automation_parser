@@ -418,6 +418,10 @@ def geekbench(file, sheet):
     print(multi_score)
     print(single_score)
 
+    close_benchmark = Button(window, text = "Next Benchmark", command = window.quit).pack(pady=5)
+
+    exit_program = Button(window, text = "Exit application", command = window.destroy).pack(pady=5)
+
     canvas.create_text(90, 50, text="Multicore Score: " + str(multi_score), fill="black", font=('Helvetica 15 bold'), anchor='w')
     canvas.create_text(90, 80, text="Singlecore Score: " + str(single_score), fill="black", font=('Helvetica 15 bold'), anchor='w')
     canvas.pack()
