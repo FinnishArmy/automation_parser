@@ -389,6 +389,14 @@ def touch_xprt(file, sheet):
     root = tree.getroot()
     value_height = 70
 
+    for next_neighbor in root.iter('OverAllScore'):
+        workload = next_neighbor.attrib
+        main_score = list(workload.values())[0]
+        canvas.create_text(90, value_height, text = "Overall Score:  " + main_score, fill="black", font=('Helvetica 15 bold'), anchor='w')
+        canvas.pack()
+
+        print(main_score)
+
     # Loop through the XML file's elements
     for neighbor in root.iter('WorkLoad'):
         value_height = value_height + 20
