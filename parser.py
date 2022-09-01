@@ -282,7 +282,7 @@ def mcp_power(file):
                     power.append(line.split(','))
 
             mcp = []
-            mcp.append(power[332])
+            mcp.append(power[-2])
             
             s = ''.join(str(x) for x in mcp)
 
@@ -382,12 +382,19 @@ def touch_xprt(file, sheet):
     # Set the tree to parse the file selected by the user
     tree = et.parse(file)
 
+    # Buttons
+    close_benchmark = Button(window, text = "Next Benchmark", command = window.quit).pack(pady=5)
+    exit_program = Button(window, text = "Exit application", command = window.destroy).pack(pady=5)
+
     root = tree.getroot()
     value_height = 70
 
+    # Loop through the XML file's elements
     for neighbor in root.iter('WorkLoad'):
         value_height = value_height + 20
         workloads = neighbor.attrib
+
+        # Convert the dict to a list and grab the values of each element
         workload_to_list = list(workloads.values())[0]
         workload_values = list(workloads.values())[1]
         print(workload_to_list)
@@ -439,7 +446,7 @@ def pick_file(window, workbook):
             PC_mark10(file, workbook)
     
         # If it's a Crossmark benchmark, call the proper function.
-        if "default" in file:
+        if "Crossmark.txt" in file:
             crossmark(file, workbook)
 
         # If it's a power data file, call the proper function.
