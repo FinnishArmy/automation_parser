@@ -378,31 +378,25 @@ def touch_xprt(file, sheet):
     # Set a window colour
     window.configure(bg = 'gray18')
 
-    canvas = Canvas(window, width= 500, height= 250, bg="White")
+    canvas = Canvas(window, width= 500, height= 500, bg="White")
     # Set the tree to parse the file selected by the user
     tree = et.parse(file)
 
     root = tree.getroot()
-
-    # Setup empty score arrays
-    Overall_Score = []
-    Beautify = []
-    Blend = []
-    Convert = []
-    Music = []
-    Slideshow = []
-
-    all_scores = []
+    value_height = 70
 
     for neighbor in root.iter('WorkLoad'):
+        value_height = value_height + 20
         workloads = neighbor.attrib
-        workload_to_list = list(workloads)[1]
+        workload_to_list = list(workloads.values())[0]
         workload_values = list(workloads.values())[1]
         print(workload_to_list)
         print(workload_values)
 
+        canvas.create_text(90, value_height, text = workload_to_list + ":  " + workload_values, fill="black", font=('Helvetica 15 bold'), anchor='w')
+        canvas.pack()
 
-    print("Under Testing")
+
 
 def geekbench(file, sheet):
     window = Tk()
