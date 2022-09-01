@@ -282,7 +282,7 @@ def mcp_power(file):
                     power.append(line.split(','))
 
             mcp = []
-            mcp.append(power[291])
+            mcp.append(power[332])
             
             s = ''.join(str(x) for x in mcp)
 
@@ -393,6 +393,14 @@ def touch_xprt(file, sheet):
     Slideshow = []
 
     all_scores = []
+
+    for neighbor in root.iter('WorkLoad'):
+        workloads = neighbor.attrib
+        workload_to_list = list(workloads)[1]
+        workload_values = list(workloads.values())[1]
+        print(workload_to_list)
+        print(workload_values)
+
 
     print("Under Testing")
 
