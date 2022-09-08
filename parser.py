@@ -286,8 +286,7 @@ def mcp_power(file):
             
             s = ''.join(str(x) for x in mcp)
 
-            canvas.create_text(120, 50, text="MCP Power AVG:  " + 
-            s.strip('[]').strip("'").split(',')[3].strip(), fill="black", font=('Helvetica 15 bold'))
+            canvas.create_text(120, 50, text="MCP Power AVG:  " + s.strip('[]').strip("'").split(',')[3].strip(), fill="black", font=('Helvetica 15 bold'))
             canvas.pack()
 
             print(s.strip('[]').strip("'").split(',')[3].strip())
