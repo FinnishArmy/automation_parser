@@ -468,12 +468,14 @@ def pick_file(window, workbook):
         if "SingleThreaded" in file:
             cinebench_singlecore(file, workbook)
         
+
         if "FullSuite.xml" in file:
             touch_xprt(file, workbook)
 
         if "Geekbench" in file:
             geekbench(file, workbook)
         
+        # Add more benchmarks above this comment in a similar format.
 
         window.mainloop()
 
@@ -507,6 +509,10 @@ def main():
 
     #check if excel sheet is there, if so, clean, if not make it
     file_exists = os.path.exists('benchmarks.xlsx')
+    file_abs_path = os.path.expanduser('~')
+
+    print("Absolute path")
+    print(file_abs_path)
 
     if file_exists != True:
         workbook = xlsxwriter.Workbook('benchmarks.xlsx')
@@ -515,7 +521,6 @@ def main():
         print("Excel sheet already exists! Deleting previous sheet")
         os.remove('benchmarks.xlsx')
         workbook = xlsxwriter.Workbook('benchmarks.xlsx')
-
 
     # Automatically detect which benchmark was selected.
     pick_file(window, workbook)
