@@ -468,7 +468,7 @@ def pick_file(window, workbook):
         if "SingleThreaded" in file:
             cinebench_singlecore(file, workbook)
         
-        if "TouchXPRT" in file:
+        if "FullSuite.xml" in file:
             touch_xprt(file, workbook)
 
         if "Geekbench" in file:
