@@ -424,6 +424,10 @@ def adk_browsing(file, sheet):
 
     canvas = Canvas(window, width= 500, height= 500, bg="White")
 
+    # Buttons
+    close_benchmark = Button(window, text = "Next Benchmark", command = window.quit).pack(pady=5)
+    exit_program = Button(window, text = "Exit application", command = window.destroy).pack(pady=5)
+
     count = 0
 
     value_height = 30
