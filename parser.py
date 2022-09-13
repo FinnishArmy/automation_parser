@@ -425,7 +425,8 @@ def adk_browsing(file, sheet):
     canvas = Canvas(window, width= 500, height= 500, bg="White")
 
     count = 0
-    
+
+    value_height = 30
     # Parses the BatteryResults XML
     if "BatteryResults" in file:
         batt = es.parse(file)
@@ -436,8 +437,11 @@ def adk_browsing(file, sheet):
         #print("%d values:" % values.length)
         for all_values in values_names:
             count+=1
+            value_height += 30
             if count <= values_names.length:
                 print((values_names[count-1].firstChild.nodeValue) + ": " + (values[count-1].firstChild.nodeValue))
+                canvas.create_text(90, value_height, text = (values_names[count-1].firstChild.nodeValue) + ":  " + (values[count-1].firstChild.nodeValue), fill="black", font=('Helvetica 15 bold'), anchor='w')
+                canvas.pack()
 
     # Parses the CommonEnergyResults XML
     elif "CommonEnergyResults" in file:
@@ -450,8 +454,11 @@ def adk_browsing(file, sheet):
         count = 0
         for all_values in values_names_energy:
             count+=1
+            value_height += 30
             if count <= values_names_energy.length:
                 print((values_names_energy[count-1].firstChild.nodeValue) + ": " + (values[count-1].firstChild.nodeValue))
+                canvas.create_text(90, value_height, text = (values_names_energy[count-1].firstChild.nodeValue) + ":  " + (values[count-1].firstChild.nodeValue), fill="black", font=('Helvetica 15 bold'), anchor='w')
+                canvas.pack()
 
 
 
