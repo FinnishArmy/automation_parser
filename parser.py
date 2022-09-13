@@ -411,7 +411,23 @@ def touch_xprt(file, sheet):
         canvas.pack()
 
 def adk_browsing(file, sheet):
-    pass
+    window = Tk()
+
+    # Set the window title name
+    window.title("ADK Browsing")
+    # Set a width and height
+    window.configure(width = 200, height = 200)
+
+    # Set a window colour
+    window.configure(bg = 'gray18')
+
+    canvas = Canvas(window, width= 500, height= 500, bg="White")
+
+    if "BatteryResults" in file:
+        pass
+
+    elif "CommonEnergyResults" in file:
+        pass
 
 
 def geekbench(file, sheet):
@@ -476,6 +492,9 @@ def pick_file(window, workbook):
 
         if "Geekbench" in file:
             geekbench(file, workbook)
+
+        if "BatteryResults" or "CommonEnergyResults" in file:
+            adk_browsing(file, workbook)
         
         # Add more benchmarks above this comment in a similar format.
 
