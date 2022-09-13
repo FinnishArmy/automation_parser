@@ -410,6 +410,8 @@ def touch_xprt(file, sheet):
         canvas.create_text(90, value_height, text = workload_to_list + ":  " + workload_values, fill="black", font=('Helvetica 15 bold'), anchor='w')
         canvas.pack()
 
+def adk_browsing(file, sheet):
+    pass
 
 
 def geekbench(file, sheet):
