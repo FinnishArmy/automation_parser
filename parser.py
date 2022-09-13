@@ -22,6 +22,7 @@ import os
 import json
 import subprocess
 import xml.etree.cElementTree as et
+import xml.dom.minidom as es
 from os.path import exists
 import xlsxwriter
 import csv
@@ -423,11 +424,24 @@ def adk_browsing(file, sheet):
 
     canvas = Canvas(window, width= 500, height= 500, bg="White")
 
+    # Parses the BatteryResults XML
     if "BatteryResults" in file:
-        pass
+        batt = es.parse(file)
 
+        values_names = batt.getElementsByTagName("ProgrammaticName")
+        values = batt.getElementsByTagName("Value")
+
+        #print("%d values:" % values.length)
+        count = 0
+        for all_values in values_names:
+            count+=1
+            if count <= values_names.length:
+                print((values_names[count-1].firstChild.nodeValue) + ": " + (values[count-1].firstChild.nodeValue))
+
+    # Parses the CommonEnergyResults XML
     elif "CommonEnergyResults" in file:
         pass
+
 
 
 def geekbench(file, sheet):
