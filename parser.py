@@ -424,6 +424,8 @@ def adk_browsing(file, sheet):
 
     canvas = Canvas(window, width= 500, height= 500, bg="White")
 
+    count = 0
+    
     # Parses the BatteryResults XML
     if "BatteryResults" in file:
         batt = es.parse(file)
@@ -432,7 +434,6 @@ def adk_browsing(file, sheet):
         values = batt.getElementsByTagName("Value")
 
         #print("%d values:" % values.length)
-        count = 0
         for all_values in values_names:
             count+=1
             if count <= values_names.length:
@@ -440,7 +441,17 @@ def adk_browsing(file, sheet):
 
     # Parses the CommonEnergyResults XML
     elif "CommonEnergyResults" in file:
-        pass
+        energy = es.parse(file)
+
+        values_names_energy = energy.getElementsByTagName("ProgrammaticName")
+        values = energy.getElementsByTagName("Value")
+
+        #print("%d values:" % values.length)
+        count = 0
+        for all_values in values_names_energy:
+            count+=1
+            if count <= values_names_energy.length:
+                print((values_names_energy[count-1].firstChild.nodeValue) + ": " + (values[count-1].firstChild.nodeValue))
 
 
 
