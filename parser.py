@@ -13,6 +13,7 @@
 #####################################
 
 # This program is for use to automatically parse XML PCMark10 Scores for easy reading.
+import tkinter
 import pandas as pd
 import numpy as np
 
@@ -413,16 +414,21 @@ def touch_xprt(file, sheet):
 
 def adk_browsing(file, sheet):
     window = Tk()
-
+    frame = Frame(window)
     # Set the window title name
     window.title("ADK Browsing")
     # Set a width and height
-    window.configure(width = 300, height = 900)
+    window.configure(width = 300, height = 500)
 
     # Set a window colour
     window.configure(bg = 'gray18')
 
-    canvas = Canvas(window, width= 500, height= 900, bg="White")
+    v_s = Scrollbar(window)
+
+    canvas = Canvas(window, width= 500, height= 900, bg="White", yscrollcommand=v_s.set)
+
+    v_s.pack(side=LEFT, fill=Y)
+
 
     # Buttons
     close_benchmark = Button(window, text = "Next Benchmark", command = window.quit).pack(pady=5)
@@ -454,7 +460,6 @@ def adk_browsing(file, sheet):
         values_names_energy = energy.getElementsByTagName("ProgrammaticName")
         values = energy.getElementsByTagName("Value")
 
-        #print("%d values:" % values.length)
         count = 0
         for all_values in values_names_energy:
             count+=1
@@ -463,6 +468,8 @@ def adk_browsing(file, sheet):
                 print((values_names_energy[count-1].firstChild.nodeValue) + ": " + (values[count-1].firstChild.nodeValue))
                 canvas.create_text(30, value_height, text = (values_names_energy[count-1].firstChild.nodeValue) + ":  " + (values[count-1].firstChild.nodeValue), fill="black", font=('Helvetica 15 bold'), anchor='w')
                 canvas.pack()
+                v_s.config(command=canvas.yview)
+    
 
 
 
