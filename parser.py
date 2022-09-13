@@ -417,12 +417,12 @@ def adk_browsing(file, sheet):
     # Set the window title name
     window.title("ADK Browsing")
     # Set a width and height
-    window.configure(width = 200, height = 200)
+    window.configure(width = 300, height = 900)
 
     # Set a window colour
     window.configure(bg = 'gray18')
 
-    canvas = Canvas(window, width= 500, height= 500, bg="White")
+    canvas = Canvas(window, width= 500, height= 900, bg="White")
 
     # Buttons
     close_benchmark = Button(window, text = "Next Benchmark", command = window.quit).pack(pady=5)
@@ -430,7 +430,7 @@ def adk_browsing(file, sheet):
 
     count = 0
 
-    value_height = 30
+    value_height = 0
     # Parses the BatteryResults XML
     if "BatteryResults" in file:
         batt = es.parse(file)
@@ -441,10 +441,10 @@ def adk_browsing(file, sheet):
         #print("%d values:" % values.length)
         for all_values in values_names:
             count+=1
-            value_height += 30
+            value_height += 13
             if count <= values_names.length:
                 print((values_names[count-1].firstChild.nodeValue) + ": " + (values[count-1].firstChild.nodeValue))
-                canvas.create_text(90, value_height, text = (values_names[count-1].firstChild.nodeValue) + ":  " + (values[count-1].firstChild.nodeValue), fill="black", font=('Helvetica 15 bold'), anchor='w')
+                canvas.create_text(30, value_height, text = (values_names[count-1].firstChild.nodeValue) + ":  " + (values[count-1].firstChild.nodeValue), fill="black", font=('Helvetica 15 bold'), anchor='w')
                 canvas.pack()
 
     # Parses the CommonEnergyResults XML
@@ -458,10 +458,10 @@ def adk_browsing(file, sheet):
         count = 0
         for all_values in values_names_energy:
             count+=1
-            value_height += 30
+            value_height += 13
             if count <= values_names_energy.length:
                 print((values_names_energy[count-1].firstChild.nodeValue) + ": " + (values[count-1].firstChild.nodeValue))
-                canvas.create_text(90, value_height, text = (values_names_energy[count-1].firstChild.nodeValue) + ":  " + (values[count-1].firstChild.nodeValue), fill="black", font=('Helvetica 15 bold'), anchor='w')
+                canvas.create_text(30, value_height, text = (values_names_energy[count-1].firstChild.nodeValue) + ":  " + (values[count-1].firstChild.nodeValue), fill="black", font=('Helvetica 15 bold'), anchor='w')
                 canvas.pack()
 
 
