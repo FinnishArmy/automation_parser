@@ -418,14 +418,14 @@ def adk_browsing(file, sheet):
     # Set the window title name
     window.title("ADK Browsing")
     # Set a width and height
-    window.configure(width = 300, height = 500)
+    window.configure(width = 500, height = 500)
 
     # Set a window colour
     window.configure(bg = 'gray18')
 
     v_s = Scrollbar(window)
 
-    canvas = Canvas(window, width= 500, height= 900, bg="White", yscrollcommand=v_s.set)
+    canvas = Canvas(window, width= 700, height= 900, bg="White", yscrollcommand=v_s.set)
 
     v_s.pack(side=LEFT, fill=Y)
 
