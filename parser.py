@@ -508,27 +508,23 @@ def geekbench(file, sheet):
 def pick_file(window, workbook):
 
     file: str
+
+    # Convert the file path to a string and check the values to call the appropriate function.
     for file in window.filename:
-        # If it's a PCMark10 benchmark, call the proper function
-        if "PCMark10_result" in file: #Instead check the type
+        if "PCMark10_result" in file:
             PC_mark10(file, workbook)
     
-        # If it's a Crossmark benchmark, call the proper function.
         if "Crossmark.txt" in file:
             crossmark(file, workbook)
 
-        # If it's a power data file, call the proper function.
         if "summary" in file:
             mcp_power(file)
 
-        # If it's a cinebench multithreaded txt, call the proper function.
         if "MultiThreaded" in file:
             cinebench_multicore(file, workbook)
 
-        # If it's a cinebench singlethreaded txt, call the proper function.
         if "SingleThreaded" in file:
             cinebench_singlecore(file, workbook)
-        
 
         if "FullSuite.xml" in file:
             touch_xprt(file, workbook)
