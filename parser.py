@@ -502,6 +502,7 @@ def geekbench(file, sheet):
     canvas.create_text(90, 50, text="Multicore Score: " + str(multi_score), fill="black", font=('Helvetica 15 bold'), anchor='w')
     canvas.create_text(90, 80, text="Singlecore Score: " + str(single_score), fill="black", font=('Helvetica 15 bold'), anchor='w')
     canvas.pack()
+    print("test")
 
 
 # Automatically detect which benchmark was selected.
